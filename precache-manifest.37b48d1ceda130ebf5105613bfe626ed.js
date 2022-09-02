@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1b44dc21916f0677293d034cebc63836",
+    "revision": "c1d9c2dd0f3769a6b22f146d67c32c7f",
     "url": "/RobertoLacabanne/cayo-amarillo/index.html"
   },
   {

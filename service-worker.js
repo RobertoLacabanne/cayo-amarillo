@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/RobertoLacabanne/cayo-amarillo/precache-manifest.8b2c6a591cef4a087cf4e26f5379c3d4.js"
+  "/RobertoLacabanne/cayo-amarillo/precache-manifest.37b48d1ceda130ebf5105613bfe626ed.js"
 );
 
 self.addEventListener('message', (event) => {
