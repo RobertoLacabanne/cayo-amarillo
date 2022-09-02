@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 
 export const Navbar = () => {
     return (
-        <nav className="navbar navbar-expand-sm navbar-dark bg-dark ">
+        <nav className="navbar navbar-expand-sm navbar-dark bg-dark  ">
             
             <Link 
                 className="navbar-brand text-warning" 
@@ -39,7 +39,7 @@ export const Navbar = () => {
                         exact
                         to="/search"
                     >
-                        Busca
+
                     </NavLink>
                 </div>
             </div>
@@ -52,7 +52,7 @@ export const Navbar = () => {
                         exact
                         to="/login"
                     >
-                        Logout
+
                     </NavLink>
                 </ul>
             </div>

@@ -41,17 +41,16 @@ export const HeroScreen = ({ history }) => {
             <div className="col-8 animate__animated animate__fadeIn">
                 <h3> { superhero } </h3>
                 <ul className="list-group list-group-flush">
-                    <li className="list-group-item"> <b> Publisher: </b> { publisher } </li>
-                    <li className="list-group-item"> <b> First appearance: </b> { first_appearance } </li>
+                    <li className="list-group-item">  <b>{ publisher }</b>  </li>
+                    <li className="list-group-item"> <b>Ingredientes: </b> { first_appearance } </li>
                 </ul>
 
-                <h5> Characters </h5>
 
                 <button 
-                    className="btn btn-outline-info"
+                    className="btn btn-outline-info text-warning"
                     onClick={ handleReturn }
                 >
-                    Return
+                    Volver
                 </button>
 
             </div>
