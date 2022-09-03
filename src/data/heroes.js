@@ -14,7 +14,7 @@ export const heroes = [
     {
         "id": "CAYO-DOBLE",
         "publisher":"Hamburguesa",
-        "first_appearance": "Pan de queso, carne x1 140gr, bacon,cheddar,cebolla caramelizada,alioli",
+        "first_appearance": "Pan de queso, carne x2 140gr, bacon,cheddar,cebolla caramelizada,alioli",
         // "superhero": "$980"
     },
     {
@@ -26,7 +26,7 @@ export const heroes = [
     {
         "id": "TRIPLE-CUARTO-SMASHEADA",
         "publisher":"Hamburguesa",
-        "first_appearance": "Pan de semillas, carne x1 110 gr,cheddar x2, salsa BigPicante, cebolla crispy",
+        "first_appearance": "Pan kustom, carne x3 110 gr,cheddar x2, cebolla",
         // "superhero": "$980"
     },
     {
@@ -69,7 +69,7 @@ export const heroes = [
     {
         "id": "TRIPLE-CUARTO-SMASHEADA",
         "publisher":"Hamburguesa",
-        "first_appearance": "Pan gelb carne x2 crema roquefort, cebolla crispy,alioli",
+        "first_appearance": "Pan gelb carne x3 , cebolla",
         // "superhero": "$1280"
     },
     {
