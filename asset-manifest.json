@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/cayo-amarillo/static/js/main.9cc079e3.chunk.js",
-    "main.js.map": "/cayo-amarillo/static/js/main.9cc079e3.chunk.js.map",
-    "runtime-main.js": "/cayo-amarillo/static/js/runtime-main.e577d6a5.js",
-    "runtime-main.js.map": "/cayo-amarillo/static/js/runtime-main.e577d6a5.js.map",
-    "static/js/2.b3544941.chunk.js": "/cayo-amarillo/static/js/2.b3544941.chunk.js",
-    "static/js/2.b3544941.chunk.js.map": "/cayo-amarillo/static/js/2.b3544941.chunk.js.map",
-    "index.html": "/cayo-amarillo/index.html",
-    "precache-manifest.91c5281a99ff4803c6844207595d87e9.js": "/cayo-amarillo/precache-manifest.91c5281a99ff4803c6844207595d87e9.js",
-    "service-worker.js": "/cayo-amarillo/service-worker.js",
-    "static/js/2.b3544941.chunk.js.LICENSE.txt": "/cayo-amarillo/static/js/2.b3544941.chunk.js.LICENSE.txt"
+    "main.js": "/static/js/main.9cc079e3.chunk.js",
+    "main.js.map": "/static/js/main.9cc079e3.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.c607270d.js",
+    "runtime-main.js.map": "/static/js/runtime-main.c607270d.js.map",
+    "static/js/2.b3544941.chunk.js": "/static/js/2.b3544941.chunk.js",
+    "static/js/2.b3544941.chunk.js.map": "/static/js/2.b3544941.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.911fc20858b7e597cbaf69729a8baa11.js": "/precache-manifest.911fc20858b7e597cbaf69729a8baa11.js",
+    "service-worker.js": "/service-worker.js",
+    "static/js/2.b3544941.chunk.js.LICENSE.txt": "/static/js/2.b3544941.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.e577d6a5.js",
+    "static/js/runtime-main.c607270d.js",
     "static/js/2.b3544941.chunk.js",
     "static/js/main.9cc079e3.chunk.js"
   ]
