@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { getHeroById } from '../../selectors/getHeroById';
+import { useContext } from 'react';
 
 export const HeroScreen = ({ history }) => {
 
@@ -44,6 +45,7 @@ export const HeroScreen = ({ history }) => {
                     <li className="list-group-item">  <b>{ publisher }</b>  </li>
                     <li className="list-group-item"> <b>Ingredientes: </b> { first_appearance } </li>
                 </ul>
+                
 
 
                 <button 

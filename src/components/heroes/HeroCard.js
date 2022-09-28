@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
+
 export const HeroCard = ({
     id,
     superhero,
@@ -18,8 +20,10 @@ export const HeroCard = ({
                 <div className="col-md-8">
                     
                     <div className="card-body">
-                        <h5 className="card-title"> { superhero } </h5>
+                        <h5 className="card-title"> { id } </h5>
                         <p className="card-text"> { alter_ego} </p>
+                        <p className="card-text"> { superhero} </p>
+
 
                         {
                             ( alter_ego !== characters ) 
@@ -31,7 +35,9 @@ export const HeroCard = ({
                         </p>
 
                         <Link to={ `./hero/${ id }` } className="text-warning">
-                            Más...
+                        <button className='btn btn-outline-danger'>
+                            Comprar 
+                        </button>
                         </Link>
 
                     </div>
