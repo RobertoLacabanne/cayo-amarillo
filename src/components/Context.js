@@ -6,7 +6,7 @@ export const ItemCart = ({ item }) => {
   const { editItemToCart } = useContext(HeroCard);
 
 
-  const { amount } = item;
+  const { id } = item;
 
   return (
     <div>
@@ -15,17 +15,17 @@ export const ItemCart = ({ item }) => {
         <div >
           <p>{item.name}</p>
           <div >
-            <button onClick={() => editItemToCart(item._id, "add", amount)}>
+            <button onClick={() => editItemToCart(item._id, "add", id)}>
               AGREGAR
             </button>
-            <button onClick={() => editItemToCart(item._id, "del", amount)}>
+            <button onClick={() => editItemToCart(item._id, "del", id)}>
               SACAR
             </button>
           </div>
         </div>
         <div >
-          <div>{item.amount}</div>
-          <p>Total: ${item.amount * item.price}</p>
+          <div>{item.id}</div>
+          <p>Total: ${item.id * item.superhero}</p>
         </div>
       </div>
     </div>
