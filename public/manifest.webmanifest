@@ -1,0 +1,14 @@
+{
+  "name": "Lo que florece",
+  "short_name": "Mamá",
+  "lang": "es-AR",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF0EC",
+  "theme_color": "#FAF0EC",
+  "icons": [
+    { "src": "/icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
