@@ -6,6 +6,9 @@ import { bakeChrysanthemum } from '../flowers/chrysanthemum.js';
 import { bakeAlstroemeria } from '../flowers/alstroemeria.js';
 import { bakeFreesia } from '../flowers/freesia.js';
 import { bakeEucalyptus, bakeFern, bakeBabysBreath } from '../flowers/greens.js';
+import { bakeAzalea } from '../flowers/azalea.js';
+import { bakeCarnation } from '../flowers/carnation.js';
+import { bakeHydrangea } from '../flowers/hydrangea.js';
 import { hsl } from '../paint/color.js';
 
 // Tamaño general de las flores respecto de la jarra.
@@ -14,6 +17,38 @@ export const K = 1.45;
 // kind: 'head' = cabeza con tallo desde el punto de atado.
 //       'spray' = rama con su propio eje que nace cerca de la boca de la jarra.
 export const FLOWERS = {
+  'azalea fucsia': {
+    kind: 'head', vr: 38 * K, mass: 3.1, depth: 5, focal: 1, dist: [220, 266], stem: hsl('#4E6A38'),
+    bake: (o) => bakeAzalea({ ...o, variant: 'fucsia', r: 36 * K }), burst: ['#E5559F', '#F190C2', '#CF3F8C'],
+  },
+  'azalea rosa': {
+    kind: 'head', vr: 38 * K, mass: 3.0, depth: 5, focal: 0.9, dist: [218, 266], stem: hsl('#4E6A38'),
+    bake: (o) => bakeAzalea({ ...o, variant: 'rosa', r: 36 * K }), burst: ['#F5A9C6', '#FAD0E0'],
+  },
+  'azalea blanca': {
+    kind: 'head', vr: 38 * K, mass: 2.8, depth: 5, focal: 0.8, dist: [218, 266], stem: hsl('#56703C'),
+    bake: (o) => bakeAzalea({ ...o, variant: 'blanca', r: 36 * K }), burst: ['#FBF4F2', '#E2D2DA'],
+  },
+  hortensia: {
+    kind: 'head', vr: 36 * K, mass: 3.4, depth: 4.8, focal: 0.7, dist: [214, 262], stem: hsl('#56703C'),
+    bake: (o) => bakeHydrangea({ ...o, variant: 'jardin', r: 38 * K }), burst: ['#9DB4E6', '#B3A2E0', '#E3AECB'],
+  },
+  'hortensia rosa': {
+    kind: 'head', vr: 36 * K, mass: 3.4, depth: 4.8, focal: 0.7, dist: [214, 262], stem: hsl('#56703C'),
+    bake: (o) => bakeHydrangea({ ...o, variant: 'rosa', r: 38 * K }), burst: ['#F0A8C4', '#F6CADB'],
+  },
+  'clavel rosa': {
+    kind: 'head', vr: 22 * K, mass: 2.0, depth: 5.2, focal: 0.75, lean: 0.8, dist: [198, 240], center: { x: 0, y: -26 * K }, stem: hsl('#6A8A6A'),
+    bake: (o) => bakeCarnation({ ...o, variant: 'rosa', r: 30 * K }), burst: ['#F28CAA', '#F8B8CB'],
+  },
+  'clavel rojo': {
+    kind: 'head', vr: 22 * K, mass: 2.1, depth: 5.2, focal: 0.8, lean: 0.8, dist: [198, 240], center: { x: 0, y: -26 * K }, stem: hsl('#6A8A6A'),
+    bake: (o) => bakeCarnation({ ...o, variant: 'rojo', r: 30 * K }), burst: ['#D4243E', '#E5545E'],
+  },
+  'clavel blanco': {
+    kind: 'head', vr: 22 * K, mass: 1.9, depth: 5.2, focal: 0.75, lean: 0.8, dist: [198, 240], center: { x: 0, y: -26 * K }, stem: hsl('#6A8A6A'),
+    bake: (o) => bakeCarnation({ ...o, variant: 'blanco', r: 30 * K }), burst: ['#FBF4EF', '#F2B8C8'],
+  },
   'rosa roja': {
     kind: 'head', vr: 36 * K, mass: 3.2, depth: 5, focal: 1, dist: [222, 268], stem: hsl('#4E6A38'),
     bake: (o) => bakeRose({ ...o, variant: 'red', r: 34 * K }), burst: ['#A3122B', '#C4303F', '#7C0D2A'],

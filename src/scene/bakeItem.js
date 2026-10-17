@@ -25,10 +25,12 @@ export function bakeItem(lite, px) {
   const o = { seed: lite.seed, scale: px };
   const head = lite.kind === 'spray' ? def.bake({ ...o, L: lite.L, dir: lite.dir }) : def.bake(o);
   const B = SCENE.B;
-  const stemEnd = lite.kind === 'head' ? { x: lite.pos.x, y: lite.pos.y + (lite.name.startsWith('alstroemeria') ? 0 : 10) } : lite.origin;
+  const stemEnd = lite.kind === 'head' ? { x: lite.pos.x, y: lite.pos.y + (lite.name.startsWith('alstroemeria') || lite.name.startsWith('clavel') ? 0 : 10) } : lite.origin;
   const dx = stemEnd.x - B.x, dy = stemEnd.y - B.y;
   const bow = rng.gauss(0, 0.06);
-  const pts = bezier(B, { x: B.x + dx * 0.15 - dy * bow, y: B.y + dy * 0.35 }, { x: B.x + dx * 0.7 - dy * bow * 0.5, y: B.y + dy * 0.75 }, stemEnd, 18);
+  // los tallos suben casi derechos dentro de la jarra y recién se abren
+  // por encima de la boca (si no, asoman por fuera del cuello)
+  const pts = bezier(B, { x: B.x + dx * 0.03 - dy * bow * 0.3, y: B.y + dy * 0.5 }, { x: B.x + dx * 0.72 - dy * bow * 0.5, y: B.y + dy * 0.78 }, stemEnd, 18);
   const stem = paintStems(`${lite.seed}-tallo`, [{ pts, w0: lite.kind === 'head' ? 2.8 : 2.2, w1: lite.kind === 'head' ? 2.0 : 1.6 }], px, def.stem, { origin: B, light: true });
   const burst = bakeLoosePetals(px, def.burst.slice(0, 2), lite.seed + '-b');
   return { head, stem, burst, stemLen: Math.hypot(dx, dy) + 12 };

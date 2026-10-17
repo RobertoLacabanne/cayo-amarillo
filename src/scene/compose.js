@@ -52,9 +52,11 @@ function candidate(def, a, d, i, jit, tallSide) {
   if (def.kind === 'head') {
     const head = polar(a, d);
     const off = def.center || { x: 0, y: 0 };
+    const rot = a * (def.lean ?? 0.32) + jit.rot;
     return {
-      kind: 'head', name: def.name, def, angle: a, dist: d, pos: head, rot: a * 0.32 + jit.rot,
-      center: { x: head.x + off.x, y: head.y + off.y }, vr: def.vr, mass: def.mass, depth: def.depth, index: i,
+      kind: 'head', name: def.name, def, angle: a, dist: d, pos: head, rot,
+      // el centro visual gira con la cabeza (importa en las que se inclinan)
+      center: { x: head.x + off.x * Math.cos(rot) - off.y * Math.sin(rot), y: head.y + off.x * Math.sin(rot) + off.y * Math.cos(rot) }, vr: def.vr, mass: def.mass, depth: def.depth, index: i,
     };
   }
   const tall = def.name === 'eucalipto';
@@ -131,7 +133,8 @@ export function planBouquet(steps, seed = 'mama') {
     const jit = { rot: lr.gauss(0, 0.04), dir: lr.chance(0.5) ? 1 : -1, Lk: lr.range(0.9, 1.06) };
     let best = null, bestS = Infinity;
     const dists = def.kind === 'head' ? range(def.dist[0], def.dist[1], 6) : [0];
-    for (let deg = -56; deg <= 56; deg += 2) {
+    const lim = def.kind === 'head' ? 50 : 56;
+    for (let deg = -lim; deg <= lim; deg += 2) {
       for (const d of dists) {
         const c = candidate(def, deg * D, d, i, jit, tallSide);
         if (!inBounds(c)) continue;

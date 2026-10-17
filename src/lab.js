@@ -8,6 +8,9 @@ import { bakeChrysanthemum } from './flowers/chrysanthemum.js';
 import { bakeAlstroemeria } from './flowers/alstroemeria.js';
 import { bakeFreesia } from './flowers/freesia.js';
 import { bakeEucalyptus, bakeFern, bakeBabysBreath } from './flowers/greens.js';
+import { bakeAzalea } from './flowers/azalea.js';
+import { bakeCarnation } from './flowers/carnation.js';
+import { bakeHydrangea } from './flowers/hydrangea.js';
 import { drawHead } from './scene/head.js';
 import { canvasStats, canvasMB } from './paint/canvas.js';
 
@@ -92,6 +95,22 @@ const studies = {
       [bakeFern({ seed: 'h1', scale: s, L: 150, dir: -1 }), 0.86, 1.0],
     ];
     for (const [h, x, y] of cells) head(h, W * x, H * y);
+  },
+  // Flores de mamá: azaleas, claveles y hortensias en sus variantes.
+  madres() {
+    const s = dpr * zoom;
+    const K = 1.45;
+    const cells = [
+      [bakeAzalea({ seed: 'a1', variant: 'fucsia', scale: s, r: 36 * K }), 0.22, 0.13],
+      [bakeAzalea({ seed: 'a2', variant: 'rosa', scale: s, r: 36 * K }), 0.5, 0.13],
+      [bakeAzalea({ seed: 'a3', variant: 'blanca', scale: s, r: 36 * K }), 0.78, 0.13],
+      [bakeCarnation({ seed: 'c1', variant: 'rosa', scale: s, r: 30 * K }), 0.22, 0.5],
+      [bakeCarnation({ seed: 'c2', variant: 'rojo', scale: s, r: 30 * K }), 0.5, 0.5],
+      [bakeCarnation({ seed: 'c3', variant: 'blanco', scale: s, r: 30 * K }), 0.78, 0.5],
+      [bakeHydrangea({ seed: 'h1', variant: 'jardin', scale: s, r: 38 * K }), 0.3, 0.8],
+      [bakeHydrangea({ seed: 'h2', variant: 'rosa', scale: s, r: 38 * K }), 0.72, 0.8],
+    ];
+    for (const [h, x, y] of cells) head(h, W * x, H * y, params.has('t') ? parseFloat(params.get('t')) : 1);
   },
   bloom() {
     const s = dpr * zoom;

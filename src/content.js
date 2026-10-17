@@ -2,9 +2,13 @@
 // flores no requiere tocar ningún otro archivo.
 //
 // Flores disponibles para "flor":
-//   'helecho', 'eucalipto', 'rosa rosada', 'rosa blanca', 'rosa roja',
-//   'rosa amarilla', 'gerbera', 'crisantemo', 'fresia lila', 'fresia',
-//   'alstroemeria rosa', 'alstroemeria', 'paniculata'
+//   de mamá:  'azalea fucsia', 'azalea rosa', 'azalea blanca',
+//             'clavel rosa', 'clavel rojo', 'clavel blanco',
+//             'hortensia', 'hortensia rosa'
+//   verdes:   'helecho', 'eucalipto', 'paniculata'
+//   otras:    'rosa rosada', 'rosa blanca', 'rosa roja', 'rosa amarilla',
+//             'gerbera', 'crisantemo', 'fresia lila', 'fresia',
+//             'alstroemeria rosa', 'alstroemeria'
 // Funciona con 6 a 16 pasos. Sugerencia de orden: verdes, flores grandes,
 // medianas y al final paniculata.
 //
@@ -26,15 +30,15 @@ Con todo mi amor,`,
     { flor: 'helecho', verso: 'Mamá, hay cosas que no se aprenden en ningún lado:' },
     { flor: 'eucalipto', verso: 'soplar la sopa, esperar despierta,' },
     { flor: 'helecho', verso: 'decir «abrigate» como quien dice «te quiero».' },
-    { flor: 'rosa rosada', verso: 'Vos me las enseñaste sin dar clase,' },
-    { flor: 'gerbera', verso: 'con las manos ocupadas y el corazón a la vista.' },
-    { flor: 'rosa blanca', verso: 'Si hoy sé cuidar a alguien, es porque te vi.' },
-    { flor: 'fresia lila', verso: 'Si me equivoco y vuelvo a empezar,' },
-    { flor: 'rosa rosada', verso: 'es porque nunca dejaste de empezar conmigo.' },
-    { flor: 'alstroemeria rosa', verso: 'Por eso hoy te traigo estas flores, una por una,' },
-    { flor: 'rosa blanca', verso: 'como vos juntabas mis días desarmados' },
-    { flor: 'fresia lila', verso: 'y los ponías de nuevo en su lugar.' },
-    { flor: 'crisantemo', verso: 'No alcanzan para devolverte nada,' },
+    { flor: 'azalea fucsia', verso: 'Vos me las enseñaste sin dar clase,' },
+    { flor: 'hortensia', verso: 'con las manos ocupadas y el corazón a la vista.' },
+    { flor: 'hortensia rosa', verso: 'Si hoy sé cuidar a alguien, es porque te vi.' },
+    { flor: 'clavel rosa', verso: 'Si me equivoco y vuelvo a empezar,' },
+    { flor: 'azalea rosa', verso: 'es porque nunca dejaste de empezar conmigo.' },
+    { flor: 'clavel blanco', verso: 'Por eso hoy te traigo estas flores, una por una,' },
+    { flor: 'azalea fucsia', verso: 'como vos juntabas mis días desarmados' },
+    { flor: 'clavel rosa', verso: 'y los ponías de nuevo en su lugar.' },
+    { flor: 'azalea blanca', verso: 'No alcanzan para devolverte nada,' },
     { flor: 'paniculata', verso: 'pero quería que algo floreciera solo para vos.' },
   ],
 };

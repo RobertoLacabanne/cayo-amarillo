@@ -7,16 +7,19 @@ una tarjetita que dice «Para mamá», caen pétalos y queda el poema completo.
 
 Es la misma mecánica que el ramo de Jime (motor de acuarela propio), con otra
 identidad: papel apenas rosado, tinta ciruela, acento lila de jacarandá y
-flores en rosa, blanco y lila.
+un ramo de azaleas, claveles y hortensias.
 
 ## Editar el poema
 
 Todo lo editable está en **`src/content.js`**: destinataria, firma, título,
 texto de la pista, mensaje final y la lista de pasos `{ flor, verso }`.
 
-- Flores disponibles: `helecho`, `eucalipto`, `rosa rosada`, `rosa blanca`,
-  `rosa roja`, `rosa amarilla`, `gerbera`, `crisantemo`, `fresia lila`,
-  `fresia`, `alstroemeria rosa`, `alstroemeria`, `paniculata`.
+- Flores de mamá: `azalea fucsia`, `azalea rosa`, `azalea blanca`,
+  `clavel rosa`, `clavel rojo`, `clavel blanco`, `hortensia` (celeste, lila y
+  rosa) y `hortensia rosa`. Verdes: `helecho`, `eucalipto`, `paniculata`.
+- También quedan las del ramo de Jime y sus variantes: `rosa rosada`,
+  `rosa blanca`, `rosa roja`, `rosa amarilla`, `gerbera`, `crisantemo`,
+  `fresia lila`, `fresia`, `alstroemeria rosa`, `alstroemeria`.
 - Funciona con **6 a 16 pasos**. La composición se recalcula sola para
   cualquier orden y cantidad, y cada paso intermedio queda equilibrado.
 - Orden sugerido: verdes, flores grandes, medianas y al final paniculata.
@@ -52,6 +55,11 @@ horneado procedural, sin tocar código:
 
 ## Cómo está hecho
 
+- **Azaleas, claveles y hortensias** (`src/flowers/azalea.js`, `carnation.js`,
+  `hydrangea.js`): racimos de cinco pétalos con pecas y estambres largos;
+  copa de pétalos con el borde picado sobre un cáliz; bola de florcitas de
+  cuatro pétalos estampadas en capas. `lab.html?s=madres&zoom=2.6` las muestra
+  de cerca.
 - **La jarra** (`src/scene/jarra.js`) se pinta igual que las flores: esmalte crema, sombra lila del lado derecho, guarda lila con florcitas, pico, asa y sombra sobre la mesa.
 - **Pintar una vez, animar sprites.** Cada pétalo se hornea a bitmap con
   Canvas 2D usando el pincel de Tyler Hobbs (polígono con deformación
