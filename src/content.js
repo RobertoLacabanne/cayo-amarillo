@@ -15,30 +15,29 @@
 // Lo que va entre corchetes se ve en otro color hasta que lo reemplaces.
 
 export default {
-  destinataria: 'mamá',
+  destinataria: 'vos',
   firma: 'Rober',
-  titulo: 'Lo que florece',
+  titulo: 'Oficio de madre',
   pista: 'tocá',
-  mensajeFinal: `Feliz día, mamá.
-Gracias por la mesa puesta,
-por la paciencia que no se ve
-y por quererme también
-cuando no era fácil.
+  mensajeFinal: `Feliz día,
+a vos y a todas las que hacen
+de lo de todos los días
+un lugar donde quedarse.
 
-Con todo mi amor,`,
+Con cariño,`,
   pasos: [
-    { flor: 'helecho', verso: 'Mamá, hay cosas que no se aprenden en ningún lado:' },
-    { flor: 'eucalipto', verso: 'soplar la sopa, esperar despierta,' },
-    { flor: 'helecho', verso: 'decir «abrigate» como quien dice «te quiero».' },
-    { flor: 'azalea fucsia', verso: 'Vos me las enseñaste sin dar clase,' },
-    { flor: 'hortensia', verso: 'con las manos ocupadas y el corazón a la vista.' },
-    { flor: 'hortensia rosa', verso: 'Si hoy sé cuidar a alguien, es porque te vi.' },
-    { flor: 'clavel rosa', verso: 'Si me equivoco y vuelvo a empezar,' },
-    { flor: 'azalea rosa', verso: 'es porque nunca dejaste de empezar conmigo.' },
-    { flor: 'clavel blanco', verso: 'Por eso hoy te traigo estas flores, una por una,' },
-    { flor: 'azalea fucsia', verso: 'como vos juntabas mis días desarmados' },
-    { flor: 'clavel rosa', verso: 'y los ponías de nuevo en su lugar.' },
-    { flor: 'azalea blanca', verso: 'No alcanzan para devolverte nada,' },
-    { flor: 'paniculata', verso: 'pero quería que algo floreciera solo para vos.' },
+    { flor: 'helecho', verso: 'Ser madre es un oficio sin horario' },
+    { flor: 'eucalipto', verso: 'y sin recibo de sueldo,' },
+    { flor: 'helecho', verso: 'que se aprende sobre la marcha' },
+    { flor: 'azalea fucsia', verso: 'y no se jubila nunca.' },
+    { flor: 'hortensia', verso: 'Es saberse de memoria una fiebre,' },
+    { flor: 'hortensia rosa', verso: 'adivinar un silencio en la otra pieza,' },
+    { flor: 'clavel rosa', verso: 'dejar la última milanesa sin que se note.' },
+    { flor: 'azalea rosa', verso: 'Es tener miedo por dos, por tres, por todos,' },
+    { flor: 'clavel blanco', verso: 'y sin embargo decir «no pasa nada».' },
+    { flor: 'azalea fucsia', verso: 'Es salir un poco movida en todas las fotos' },
+    { flor: 'clavel rosa', verso: 'porque siempre estaba alcanzando algo.' },
+    { flor: 'azalea blanca', verso: 'Por eso hoy, aunque sea un ratito,' },
+    { flor: 'paniculata', verso: 'que alguien te alcance las flores a vos.' },
   ],
 };

@@ -48,7 +48,7 @@ let finalState = null;
 let area = null;
 
 // ------------------------------------------------------------ textos
-document.title = content.titulo || 'Flores para mamá';
+document.title = content.titulo || 'Flores para vos';
 titleEl.innerHTML = '';
 titleEl.append(document.createTextNode(content.titulo || ''));
 const small = document.createElement('small');
