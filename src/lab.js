@@ -11,7 +11,8 @@ import { bakeEucalyptus, bakeFern, bakeBabysBreath } from './flowers/greens.js';
 import { bakeAzalea } from './flowers/azalea.js';
 import { bakeCarnation } from './flowers/carnation.js';
 import { bakeHydrangea } from './flowers/hydrangea.js';
-import { drawHead } from './scene/head.js';
+import { drawHead, drawSprite } from './scene/head.js';
+import { bakeBird } from './scene/picaflor.js';
 import { canvasStats, canvasMB } from './paint/canvas.js';
 
 
@@ -111,6 +112,27 @@ const studies = {
       [bakeHydrangea({ seed: 'h2', variant: 'rosa', scale: s, r: 38 * K }), 0.72, 0.8],
     ];
     for (const [h, x, y] of cells) head(h, W * x, H * y, params.has('t') ? parseFloat(params.get('t')) : 1);
+  },
+  // Picaflor: cuerpo y tres poses del ala (la animación las barre rápido).
+  picaflor() {
+    const s = dpr * zoom;
+    const b = bakeBird(s);
+    [[0.3, -20], [0.7, 50], [0.5, 15]].forEach(([fx, deg], i) => {
+      ctx.save();
+      ctx.translate(W * fx * dpr, H * (0.3 + i * 0.25) * dpr);
+      ctx.scale(dpr * zoom, dpr * zoom);
+      const wingAt = (a, al) => {
+        ctx.save();
+        ctx.translate(b.shoulder.x, b.shoulder.y);
+        ctx.rotate(a * Math.PI / 180);
+        drawSprite(ctx, b.wing, al);
+        ctx.restore();
+      };
+      wingAt(deg + 25, 0.5);
+      drawSprite(ctx, b.body, 1);
+      wingAt(deg, 0.85);
+      ctx.restore();
+    });
   },
   bloom() {
     const s = dpr * zoom;

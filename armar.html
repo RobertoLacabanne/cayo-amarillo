@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#FAF0EC" />
+<title>Armar links · Oficio de madre</title>
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="64x64" />
+</head>
+<body>
+<main class="armar">
+  <img class="ramo" src="/icon-512.png" alt="" width="132" height="132" />
+  <h1>Un link para cada mamá</h1>
+  <p class="intro">Escribí su nombre y la tarjetita de la jarra va a decir «Para» y su nombre. Si lo dejás vacío, dice «Para vos».</p>
+  <form id="form" autocomplete="off">
+    <label for="nombre">¿Para quién es?</label>
+    <input id="nombre" name="nombre" type="text" maxlength="28" placeholder="Por ejemplo, Marta" enterkeyhint="done" />
+  </form>
+  <p class="link" id="link" aria-live="polite"></p>
+  <div class="botones">
+    <a class="btn principal" id="wa" href="#" target="_blank" rel="noopener">Mandar por WhatsApp</a>
+    <button class="btn" id="copiar" type="button">Copiar link</button>
+    <a class="btn suave" id="ver" href="/" target="_blank" rel="noopener">Ver cómo queda</a>
+  </div>
+  <p class="estado" id="estado" aria-live="polite"></p>
+</main>
+<script type="module" src="/src/armar.js"></script>
+</body>
+</html>

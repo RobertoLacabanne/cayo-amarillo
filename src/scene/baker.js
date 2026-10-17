@@ -3,6 +3,7 @@
 // principal, en momentos quietos.
 import { bakeItem, liteOf } from './bakeItem.js';
 import { bakeBow, bakeLoosePetals, RAIN } from './jarra.js';
+import { bakeBird } from './picaflor.js';
 import { easeBloom } from './ease.js';
 
 function supportsWorkerBake() {
@@ -68,6 +69,7 @@ export class Baker {
     return this.call('final', null, px, () => ({
       bow: bakeBow(px),
       rain: bakeLoosePetals(px, RAIN, 'lluvia'),
+      bird: bakeBird(px),
     }));
   }
 }

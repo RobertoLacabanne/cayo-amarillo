@@ -103,15 +103,29 @@ body { position: fixed; inset: 0; }
   52% { transform: translate(-50%, -50%) scale(1); }
 }
 
-/* cuántas flores van: para que se entienda que hay que seguir tocando */
-#progress {
-  position: absolute; left: max(10px, calc((100vw - var(--col)) / 2 + 10px)); bottom: calc(var(--safe-b) + 6px);
-  margin: 0; min-height: 44px; padding: 8px 10px; display: flex; align-items: center;
-  font-family: var(--hand); font-size: 18px; color: var(--ink-soft); pointer-events: none;
-  opacity: 0; transition: opacity .6s ease;
+/* recorrido: un pétalo por paso, se pinta del color de cada flor */
+#trail {
+  position: absolute; left: 0; right: 0; margin: 0 auto; width: var(--col);
+  top: calc(var(--safe-t) + 14px + var(--verses-h, 26dvh) + 10px);
+  display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none;
+  opacity: 0; transition: opacity .8s ease;
 }
-#progress.on { opacity: .75; }
-#progress b { font-weight: 500; color: var(--accent); }
+#trail.on { opacity: 1; }
+#trail .petals { display: flex; gap: 7px; }
+#trail i {
+  width: 7px; height: 9px; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  border: 1px solid rgba(123, 82, 168, .32); background: transparent;
+  transition: background-color .5s ease, border-color .5s ease, transform .6s var(--ease-soft);
+}
+#trail i.done { border-color: transparent; background: var(--c); transform: scale(1.15); }
+#trail i.now { animation: pop .7s var(--ease-soft); }
+@keyframes pop { 0% { transform: scale(.4); } 60% { transform: scale(1.5); } 100% { transform: scale(1.15); } }
+#trail .nudge {
+  margin: 0; font-family: var(--hand); font-size: 20px; color: var(--accent);
+  opacity: 0; transform: translate3d(0, -4px, 0); transition: opacity .9s ease, transform .9s var(--ease-soft);
+}
+#trail .nudge.on { opacity: .85; transform: none; animation: breathe 2.6s ease-in-out infinite; }
+@keyframes breathe { 0%, 100% { opacity: .85; } 50% { opacity: .45; } }
 
 /* sonido: una palabra a mano, no un ícono */
 #sound {
@@ -158,6 +172,17 @@ body { position: fixed; inset: 0; }
 .message { font-family: var(--serif); font-style: italic; font-size: 20px; line-height: 1.45; color: var(--ink-soft); margin: 26px 0 0; white-space: pre-line; }
 .sign { font-family: var(--hand); font-size: 32px; color: var(--accent); margin: 18px 6px 26px 0; text-align: right; }
 .sign.placeholder { color: var(--flag); }
+/* al final: compartir (lo principal) y volver a armar */
+.actions { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.share {
+  font-family: var(--hand); font-size: 21px; color: var(--accent); cursor: pointer;
+  min-height: 48px; padding: 8px 22px; border-radius: 999px;
+  background: rgba(123, 82, 168, .08); border: 1px solid rgba(123, 82, 168, .35);
+  transition: background-color .2s ease-out, transform .2s ease-out;
+}
+.share:hover { background: rgba(123, 82, 168, .14); }
+.share:active { transform: scale(.97); }
+.share:focus-visible { outline: 1.5px dashed var(--accent); outline-offset: 3px; }
 .again {
   font-family: var(--hand); font-size: 19px; color: var(--ink-soft); background: none; border: 0; cursor: pointer;
   padding: 12px 14px; min-height: 44px; text-decoration: underline; text-decoration-style: wavy;
@@ -168,6 +193,7 @@ body { position: fixed; inset: 0; }
 @media (prefers-reduced-motion: reduce) {
   #app.ready #light { animation: none; }
   #hint.beat { animation: none; }
+  #trail i.now, #trail .nudge.on { animation: none; }
   .w { transform: none; transition: opacity .6s ease; }
   .line { transition: opacity .6s ease; }
 }

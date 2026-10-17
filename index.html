@@ -7,8 +7,18 @@
 <meta name="theme-color" content="#FAF0EC" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="description" content="Flores para vos, una por toque." />
+<meta name="description" content="Un regalito para vos: tocá la pantalla y armá el ramo, flor por flor." />
 <title>Oficio de madre</title>
+<!-- vista previa al compartir el link (WhatsApp, etc.) -->
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="es_AR" />
+<meta property="og:title" content="Feliz día · Oficio de madre" />
+<meta property="og:description" content="Un regalito para vos: tocá la pantalla y armá el ramo, flor por flor." />
+<meta property="og:image" content="https://feliz-dia-de-rober.netlify.app/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://feliz-dia-de-rober.netlify.app/" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="64x64" />
 <link rel="apple-touch-icon" href="/icon-180.png" />
 <link rel="manifest" href="/manifest.webmanifest" />
@@ -32,10 +42,13 @@
       <div class="poem"></div>
       <p class="message"></p>
       <p class="sign"></p>
-      <button type="button" class="again">volver a armarlo</button>
+      <div class="actions">
+        <button type="button" class="share">mandáselo a otra mamá</button>
+        <button type="button" class="again">volver a armarlo</button>
+      </div>
     </article>
   </section>
-  <p id="progress" aria-hidden="true"></p>
+  <div id="trail" aria-hidden="true"><div class="petals"></div><p class="nudge">seguí tocando</p></div>
   <button type="button" id="sound" aria-pressed="false"></button>
 </main>
 <script type="module" src="/src/main.js"></script>

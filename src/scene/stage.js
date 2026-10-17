@@ -12,6 +12,9 @@ import { bakeJar } from './jarra.js';
 import { applyArt, hasArt } from './assets.js';
 
 const STEM_DUR = 0.9;
+// Visita del picaflor (segundos desde que empieza el final).
+// Llega cuando la jarra ya se acomodó arriba del poema.
+const BIRD = { arrive: 5.0, hover: 7.0, leave: 13.5, end: 15.2, scale: 1.7 };
 const HEAD_DELAY = 0.42;
 const HEAD_DUR = 1.8;
 
@@ -67,6 +70,7 @@ export class Stage {
   setFinalAssets(d) {
     this.bow = d.bow;
     this.rain = d.rain;
+    this.bird = d.bird;
   }
 
   // Arma un elemento a partir de lo horneado (en el worker o acá).
@@ -109,7 +113,7 @@ export class Stage {
 
   // ----------------------------------------------------------- final
   startFinal(now = performance.now()) {
-    this.final = { t0: now / 1000, rainUntil: now / 1000 + 9 };
+    this.final = { t0: now / 1000, rainUntil: now / 1000 + 9, visit: this.reduced ? null : this.planVisit() };
     this.kick();
   }
 
@@ -151,6 +155,7 @@ export class Stage {
     if (this.jar) { add(this.jar.back); add(this.jar.front); }
     if (this.bow) { add(this.bow.band); add(this.bow.bow); }
     if (this.rain) this.rain.forEach(add);
+    if (this.bird) { add(this.bird.body); add(this.bird.wing); }
     return (px * 4) / 1048576;
   }
 
@@ -188,7 +193,7 @@ export class Stage {
     if (this.particles.length) animating = true;
     if (this.final) {
       const e = t - this.final.t0;
-      if (e < 4.2) animating = true;
+      if (e < 4.2 || (this.final.visit && e < BIRD.end)) animating = true;
       if (!this.reduced && t < this.final.rainUntil) {
         animating = true;
         if (this.rng.next() < 0.09) this.spawnRain(t);
@@ -270,8 +275,71 @@ export class Stage {
     }
   }
 
+  // A qué flor va el picaflor: la más alta, del lado derecho si se puede.
+  planVisit() {
+    const heads = this.items.filter((it) => it.plan.kind === 'head').map((it) => it.plan);
+    if (!heads.length || !this.bird) return null;
+    const right = heads.filter((p) => p.center.x >= SCENE.B.x);
+    const f = (right.length ? right : heads).reduce((a, b) => (b.center.y < a.center.y ? b : a));
+    const side = f.center.x >= SCENE.B.x ? 1 : -1;
+    // a esta altura la escena está achicada y sobra lugar a los costados
+    const reach = 30 * BIRD.scale;
+    const hover = {
+      x: Math.max(-70, Math.min(SCENE.W + 70, f.center.x + side * (f.vr * 0.7 + reach))),
+      y: f.center.y - f.vr * 0.15,
+    };
+    const from = { x: hover.x + side * 300, y: hover.y - 140 };
+    const away = { x: hover.x + side * 40, y: hover.y - 420 };
+    return { side, hover, from, away };
+  }
+
+  // Llega, se queda suspendido junto a la flor y se va.
+  drawBird(c, t, e) {
+    const v = this.final.visit;
+    if (!v || e < BIRD.arrive || e > BIRD.end) return;
+    let x, y, tilt = -0.42;
+    if (e < BIRD.hover) {
+      const u = easeInOutSine((e - BIRD.arrive) / (BIRD.hover - BIRD.arrive));
+      const cx = v.hover.x + v.side * 90, cy = v.from.y - 40;
+      x = (1 - u) * (1 - u) * v.from.x + 2 * u * (1 - u) * cx + u * u * v.hover.x;
+      y = (1 - u) * (1 - u) * v.from.y + 2 * u * (1 - u) * cy + u * u * v.hover.y;
+      tilt = -0.2 - u * 0.22;
+    } else if (e < BIRD.leave) {
+      const h = e - BIRD.hover;
+      x = v.hover.x + Math.sin(h * 2.1) * 2.2 + Math.sin(h * 5.3) * 0.6;
+      y = v.hover.y + Math.sin(h * 3.4) * 2.6;
+      tilt = -0.42 + Math.sin(h * 1.7) * 0.05;
+    } else {
+      const u = clamp01((e - BIRD.leave) / (BIRD.end - BIRD.leave));
+      const k = u * u;
+      x = v.hover.x + (v.away.x - v.hover.x) * k;
+      y = v.hover.y + (v.away.y - v.hover.y) * k;
+      tilt = -0.42 - u * 0.5;
+    }
+    const b = this.bird;
+    const fade = clamp01((e - BIRD.arrive) / 0.4) * clamp01((BIRD.end - e) / 0.5);
+    c.save();
+    c.translate(x, y);
+    c.scale(v.side * BIRD.scale, BIRD.scale); // mira hacia la flor
+    c.rotate(tilt);
+    // aleteo: la misma ala en varias posiciones a la vez se lee como un borrón rápido
+    const beat = t * 2 * Math.PI * 9;
+    const wing = (k, base, alpha) => {
+      c.save();
+      c.translate(b.shoulder.x, b.shoulder.y);
+      c.rotate(base + Math.sin(beat + k * 2.1) * 0.95);
+      drawSprite(c, b.wing, alpha * fade);
+      c.restore();
+    };
+    for (let k = 0; k < 3; k++) wing(k, 0.35, 0.22);
+    drawSprite(c, b.body, fade);
+    for (let k = 0; k < 3; k++) wing(k + 0.5, 0.1, 0.32);
+    c.restore();
+  }
+
   drawFinal(c, t) {
     const e = t - this.final.t0;
+    this.drawBird(c, t, e);
     if (!this.bow) return;
     const R = this.reduced;
     // la cinta rodea el cuello de la jarra y se ata el moño

@@ -26,6 +26,22 @@ texto de la pista, mensaje final y la lista de pasos `{ flor, verso }`.
 - Lo que va entre corchetes (por ejemplo la firma `[TU NOMBRE]`) se muestra
   en frambuesa para que no se escape nada sin reemplazar.
 
+## Mandarlo a cada mamá
+
+- `armar.html` arma un link por mamá: escribís el nombre y da el link con
+  `?para=Nombre`, listo para copiar o mandar por WhatsApp. La tarjetita de la
+  jarra dice «Para» y ese nombre; sin nombre, dice «Para vos».
+- Al final del regalo, «mandáselo a otra mamá» comparte el link sin nombre.
+- `public/og.png` es la vista previa que muestra WhatsApp al pegar el link.
+
+## Detalles del recorrido
+
+- Bajo los versos, una fila de pétalos se pinta del color de cada flor; si
+  alguien se queda quieto a mitad del ramo, aparece «seguí tocando».
+- En el final llega un picaflor (`src/scene/picaflor.js`), se queda
+  suspendido junto a la flor más alta y se va. No aparece con `?calma` ni con
+  movimiento reducido.
+
 ## Correrlo y publicarlo
 
 ```bash

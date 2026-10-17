@@ -5,6 +5,7 @@ import './style.css';
 import content from './content.js';
 import { Stage } from './scene/stage.js';
 import { planBouquet, SCENE } from './scene/compose.js';
+import { flowerDef } from './scene/registry.js';
 import { paintBackground, paintWindowLight } from './scene/background.js';
 import { Chime } from './scene/audio.js';
 import { loadArt } from './scene/assets.js';
@@ -31,6 +32,9 @@ const demoN = parseInt(params.get('demo') || '0', 10);
 const steps = (demoN
   ? (demoN <= 8 ? ['helecho', 'eucalipto', 'rosa roja', 'gerbera', 'rosa amarilla', 'crisantemo', 'alstroemeria', 'paniculata'] : DEMO).slice(0, Math.min(16, demoN)).map((flor, i) => ({ flor, verso: `[VERSO ${i + 1} – reemplazar]` }))
   : content.pasos || []).slice(0, 16);
+// ?para=Ana personaliza la tarjeta y el subtítulo (el ramo es el mismo para todas)
+const para = (params.get('para') || '').replace(/\s+/g, ' ').trim().slice(0, 28);
+const destinataria = para || content.destinataria;
 const seed = `${content.destinataria || 'ramo'}-${steps.map((s) => s.flor).join('|')}`;
 
 const stage = new Stage($('#scene'), { reduced });
@@ -52,7 +56,7 @@ document.title = content.titulo || 'Flores para vos';
 titleEl.innerHTML = '';
 titleEl.append(document.createTextNode(content.titulo || ''));
 const small = document.createElement('small');
-small.textContent = `para ${content.destinataria}`;
+small.textContent = `para ${destinataria}`;
 titleEl.append(small);
 hintEl.innerHTML = '';
 const tap = document.createElement('span');
@@ -64,16 +68,27 @@ if (content.pistaDetalle) {
   det.textContent = content.pistaDetalle;
   hintEl.append(det);
 }
-const progressEl = $('#progress');
+const trailEl = $('#trail');
+const nudgeEl = trailEl.querySelector('.nudge');
+const trailPetals = steps.map((st) => {
+  const el = document.createElement('i');
+  el.style.setProperty('--c', flowerDef(st.flor).burst[0]);
+  trailEl.querySelector('.petals').append(el);
+  return el;
+});
 
-// "3 de 16 · seguí tocando": se ve desde el primer toque hasta el final.
+// Un pétalo por flor: se pintan a medida que se toca. Si alguien se queda
+// quieto a mitad del ramo, aparece un "seguí tocando" a mano.
+let nudgeT = 0;
 function renderProgress(n) {
-  progressEl.innerHTML = '';
-  if (n <= 0) return progressEl.classList.remove('on');
-  const b = document.createElement('b');
-  b.textContent = `${n} de ${steps.length}`;
-  progressEl.append(b, document.createTextNode(n < steps.length ? ' · seguí tocando' : ''));
-  progressEl.classList.add('on');
+  trailPetals.forEach((el, k) => {
+    el.classList.toggle('done', k < n);
+    el.classList.toggle('now', k === n - 1);
+  });
+  trailEl.classList.toggle('on', n > 0);
+  nudgeEl.classList.remove('on');
+  clearTimeout(nudgeT);
+  if (n > 0 && n < steps.length) nudgeT = setTimeout(() => nudgeEl.classList.add('on'), 3800);
 }
 
 function renderSound() {
@@ -249,7 +264,7 @@ async function finale() {
   setTimeout(() => chime.finale(), reduced ? 200 : 1700);
   const T = reduced ? 0.35 : 1;
   setTimeout(() => cardEl.classList.add('on'), 3000 * T);
-  setTimeout(() => { versesEl.style.opacity = '0'; soundEl.classList.add('hide'); progressEl.classList.remove('on'); }, 2400 * T);
+  setTimeout(() => { versesEl.style.opacity = '0'; soundEl.classList.add('hide'); trailEl.classList.remove('on'); }, 2400 * T);
   setTimeout(() => placeFinal(true), 3600 * T);
   setTimeout(() => {
     finalEl.classList.add('on');
@@ -275,7 +290,11 @@ function fillFinal() {
   const sign = finalEl.querySelector('.sign');
   sign.textContent = `— ${content.firma || ''}`;
   sign.classList.toggle('placeholder', isPlaceholder(content.firma || ''));
-  cardEl.querySelector('span').textContent = `Para ${content.destinataria}`;
+  const label = `Para ${destinataria}`;
+  const cardText = cardEl.querySelector('span');
+  cardText.textContent = label;
+  // los nombres largos se achican para entrar en la tarjetita
+  cardText.style.fontSize = Math.max(15, 23 - Math.max(0, label.length - 10) * 1.2) + 'px';
 }
 
 finalEl.addEventListener('scroll', () => {
@@ -330,6 +349,22 @@ soundEl.addEventListener('click', () => {
   renderSound();
 });
 finalEl.querySelector('.again').addEventListener('click', restart);
+
+// Compartir el regalo sin el nombre de esta destinataria.
+const shareEl = finalEl.querySelector('.share');
+shareEl.addEventListener('click', async () => {
+  const url = location.origin + location.pathname;
+  const data = { title: content.titulo || 'Feliz día', text: 'Un regalito para vos: tocá la pantalla y armá el ramo.', url };
+  try {
+    if (navigator.share) return await navigator.share(data);
+    await navigator.clipboard.writeText(url);
+    shareEl.textContent = '¡link copiado!';
+  } catch (e) {
+    if (e && e.name === 'AbortError') return; // cerró el menú de compartir
+    shareEl.textContent = url;
+  }
+  setTimeout(() => { shareEl.textContent = 'mandáselo a otra mamá'; }, 2600);
+});
 document.addEventListener('gesturestart', (e) => e.preventDefault());
 let resizeT = 0;
 window.addEventListener('resize', () => {
