@@ -28,10 +28,13 @@ texto de la pista, mensaje final y la lista de pasos `{ flor, verso }`.
 
 ## Mandarlo a cada mamá
 
-- `armar.html` arma un link por mamá: escribís el nombre y da el link con
-  `?para=Nombre`, listo para copiar o mandar por WhatsApp. La tarjetita de la
-  jarra dice «Para» y ese nombre; sin nombre, dice «Para vos».
-- Al final del regalo, «mandáselo a otra mamá» comparte el link sin nombre.
+- `armar.html` arma un link por mamá: su nombre (`?para=Nombre`) y de parte
+  de quién (`?de=Nombre`), listo para copiar o mandar por WhatsApp. La
+  tarjetita de la jarra dice «Para» y ese nombre (sin nombre, «Para vos»), y
+  el poema termina firmado con `de`. Sin `de` firma la de `content.js`
+  (Rober); con `de` vacío va sin firma.
+- Al final del regalo, «mandáselo a otra mamá» lleva al armador con la firma
+  vacía, para que cada una lo mande con su nombre.
 - `public/og.png` es la vista previa que muestra WhatsApp al pegar el link.
 
 ## Detalles del recorrido

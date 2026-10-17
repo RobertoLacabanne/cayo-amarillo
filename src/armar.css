@@ -35,8 +35,9 @@ input {
 input::placeholder { color: rgba(110, 80, 104, .5); }
 input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
+.ayuda { margin: 6px 4px 16px; font-size: 13px; color: var(--ink-soft); }
 .link {
-  width: 100%; margin: 14px 0 20px; padding: 10px 12px; border-radius: 8px; background: var(--accent-soft);
+  width: 100%; margin: 4px 0 20px; padding: 10px 12px; border-radius: 8px; background: var(--accent-soft);
   font-size: 13px; color: var(--ink-soft); word-break: break-all; user-select: all; -webkit-user-select: all;
 }
 

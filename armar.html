@@ -12,10 +12,14 @@
 <main class="armar">
   <img class="ramo" src="/icon-512.png" alt="" width="132" height="132" />
   <h1>Un link para cada mamá</h1>
-  <p class="intro">Escribí su nombre y la tarjetita de la jarra va a decir «Para» y su nombre. Si lo dejás vacío, dice «Para vos».</p>
+  <p class="intro">Escribí su nombre y el tuyo: la tarjetita de la jarra dice «Para» y su nombre, y el poema termina firmado por vos.</p>
   <form id="form" autocomplete="off">
     <label for="nombre">¿Para quién es?</label>
-    <input id="nombre" name="nombre" type="text" maxlength="28" placeholder="Por ejemplo, Marta" enterkeyhint="done" />
+    <input id="nombre" name="nombre" type="text" maxlength="28" placeholder="Por ejemplo, Marta" enterkeyhint="next" />
+    <p class="ayuda">Si lo dejás vacío, dice «Para vos».</p>
+    <label for="de">¿De parte de quién?</label>
+    <input id="de" name="de" type="text" maxlength="28" placeholder="Tu nombre" enterkeyhint="done" />
+    <p class="ayuda">Así firma el poema al final. Si lo dejás vacío, va sin firma.</p>
   </form>
   <p class="link" id="link" aria-live="polite"></p>
   <div class="botones">

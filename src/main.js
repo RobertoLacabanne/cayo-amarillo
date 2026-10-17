@@ -33,8 +33,11 @@ const steps = (demoN
   ? (demoN <= 8 ? ['helecho', 'eucalipto', 'rosa roja', 'gerbera', 'rosa amarilla', 'crisantemo', 'alstroemeria', 'paniculata'] : DEMO).slice(0, Math.min(16, demoN)).map((flor, i) => ({ flor, verso: `[VERSO ${i + 1} – reemplazar]` }))
   : content.pasos || []).slice(0, 16);
 // ?para=Ana personaliza la tarjeta y el subtítulo (el ramo es el mismo para todas)
-const para = (params.get('para') || '').replace(/\s+/g, ' ').trim().slice(0, 28);
+const limpio = (v) => v.replace(/\s+/g, ' ').trim().slice(0, 28);
+const para = limpio(params.get('para') || '');
 const destinataria = para || content.destinataria;
+// ?de=Nombre cambia la firma; ?de= vacío la saca (sin parámetro, la de content.js)
+const firma = params.has('de') ? limpio(params.get('de') || '') : content.firma || '';
 const seed = `${content.destinataria || 'ramo'}-${steps.map((s) => s.flor).join('|')}`;
 
 const stage = new Stage($('#scene'), { reduced });
@@ -285,11 +288,13 @@ function fillFinal() {
     poem.append(p);
   }
   const msg = finalEl.querySelector('.message');
-  msg.textContent = content.mensajeFinal || '';
+  // sin firma, el saludo no queda colgando
+  msg.textContent = firma ? content.mensajeFinal || '' : (content.mensajeFinal || '').replace(/\n+[^\n]*,\s*$/, '');
   msg.classList.toggle('placeholder', isPlaceholder(msg.textContent));
   const sign = finalEl.querySelector('.sign');
-  sign.textContent = `— ${content.firma || ''}`;
-  sign.classList.toggle('placeholder', isPlaceholder(content.firma || ''));
+  sign.textContent = firma ? `— ${firma}` : '';
+  sign.hidden = !firma;
+  sign.classList.toggle('placeholder', isPlaceholder(firma));
   const label = `Para ${destinataria}`;
   const cardText = cardEl.querySelector('span');
   cardText.textContent = label;
@@ -350,20 +355,9 @@ soundEl.addEventListener('click', () => {
 });
 finalEl.querySelector('.again').addEventListener('click', restart);
 
-// Compartir el regalo sin el nombre de esta destinataria.
-const shareEl = finalEl.querySelector('.share');
-shareEl.addEventListener('click', async () => {
-  const url = location.origin + location.pathname;
-  const data = { title: content.titulo || 'Feliz día', text: 'Un regalito para vos: tocá la pantalla y armá el ramo.', url };
-  try {
-    if (navigator.share) return await navigator.share(data);
-    await navigator.clipboard.writeText(url);
-    shareEl.textContent = '¡link copiado!';
-  } catch (e) {
-    if (e && e.name === 'AbortError') return; // cerró el menú de compartir
-    shareEl.textContent = url;
-  }
-  setTimeout(() => { shareEl.textContent = 'mandáselo a otra mamá'; }, 2600);
+// Para mandárselo a otra mamá: el armador, así cada una pone su nombre y su firma.
+finalEl.querySelector('.share').addEventListener('click', () => {
+  location.href = '/armar.html?otra';
 });
 document.addEventListener('gesturestart', (e) => e.preventDefault());
 let resizeT = 0;
