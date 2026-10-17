@@ -83,9 +83,14 @@ body { position: fixed; inset: 0; }
   font-family: var(--hand); font-size: 30px; color: var(--accent);
   opacity: 0; pointer-events: none; transition: opacity 1.2s ease;
 }
-#hint::after {
+#hint { text-align: center; }
+#hint .tap { position: relative; display: inline-block; }
+#hint .tap::after {
   content: ''; position: absolute; left: 50%; top: 88%; width: 46px; height: 7px; margin-left: -23px;
   background: var(--hint-stroke) no-repeat center / contain; opacity: .7;
+}
+#hint small {
+  display: block; margin-top: 14px; font-size: 18px; line-height: 1.25; color: var(--ink-soft); white-space: nowrap;
 }
 #app.ready #hint { opacity: .9; }
 #hint.beat { animation: beat 2.4s ease-in-out infinite; }
@@ -97,6 +102,16 @@ body { position: fixed; inset: 0; }
   36% { transform: translate(-50%, -50%) scale(1.05); }
   52% { transform: translate(-50%, -50%) scale(1); }
 }
+
+/* cuántas flores van: para que se entienda que hay que seguir tocando */
+#progress {
+  position: absolute; left: max(10px, calc((100vw - var(--col)) / 2 + 10px)); bottom: calc(var(--safe-b) + 6px);
+  margin: 0; min-height: 44px; padding: 8px 10px; display: flex; align-items: center;
+  font-family: var(--hand); font-size: 18px; color: var(--ink-soft); pointer-events: none;
+  opacity: 0; transition: opacity .6s ease;
+}
+#progress.on { opacity: .75; }
+#progress b { font-weight: 500; color: var(--accent); }
 
 /* sonido: una palabra a mano, no un ícono */
 #sound {

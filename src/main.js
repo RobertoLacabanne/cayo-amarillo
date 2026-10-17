@@ -54,7 +54,27 @@ titleEl.append(document.createTextNode(content.titulo || ''));
 const small = document.createElement('small');
 small.textContent = `para ${content.destinataria}`;
 titleEl.append(small);
-hintEl.textContent = content.pista || 'tocá';
+hintEl.innerHTML = '';
+const tap = document.createElement('span');
+tap.className = 'tap';
+tap.textContent = content.pista || 'tocá';
+hintEl.append(tap);
+if (content.pistaDetalle) {
+  const det = document.createElement('small');
+  det.textContent = content.pistaDetalle;
+  hintEl.append(det);
+}
+const progressEl = $('#progress');
+
+// "3 de 16 · seguí tocando": se ve desde el primer toque hasta el final.
+function renderProgress(n) {
+  progressEl.innerHTML = '';
+  if (n <= 0) return progressEl.classList.remove('on');
+  const b = document.createElement('b');
+  b.textContent = `${n} de ${steps.length}`;
+  progressEl.append(b, document.createTextNode(n < steps.length ? ' · seguí tocando' : ''));
+  progressEl.classList.add('on');
+}
 
 function renderSound() {
   soundEl.innerHTML = chime.muted ? 'sonido <s>sí</s> no' : 'sonido sí';
@@ -190,6 +210,7 @@ function step() {
     return;
   }
   const i = current++;
+  renderProgress(current);
   cooldownUntil = now + (reduced ? 500 : 820);
   if (i === 0) {
     titleEl.classList.add('out');
@@ -228,7 +249,7 @@ async function finale() {
   setTimeout(() => chime.finale(), reduced ? 200 : 1700);
   const T = reduced ? 0.35 : 1;
   setTimeout(() => cardEl.classList.add('on'), 3000 * T);
-  setTimeout(() => { versesEl.style.opacity = '0'; soundEl.classList.add('hide'); }, 2400 * T);
+  setTimeout(() => { versesEl.style.opacity = '0'; soundEl.classList.add('hide'); progressEl.classList.remove('on'); }, 2400 * T);
   setTimeout(() => placeFinal(true), 3600 * T);
   setTimeout(() => {
     finalEl.classList.add('on');
@@ -282,6 +303,7 @@ function restart() {
     prepared.length = 0;
     promised.length = 0;
     current = 0;
+    renderProgress(0);
     finished = false;
     titleEl.classList.remove('out');
     hintEl.classList.remove('out');
@@ -353,6 +375,7 @@ async function boot() {
     }
     stage.particles = [];
     current = n;
+    renderProgress(n);
   }
   window.__stage = stage;
   // MB de bitmaps: escena + fondo + temporales vivos del hilo principal
