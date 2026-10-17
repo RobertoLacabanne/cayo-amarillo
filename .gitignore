@@ -6,3 +6,4 @@ dist
 # fotos personales: solo locales
 referencias/*
 !referencias/LEEME.md
+.netlify

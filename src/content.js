@@ -16,7 +16,7 @@
 
 export default {
   destinataria: 'mamá',
-  firma: '[TU NOMBRE]',
+  firma: 'Rober',
   titulo: 'Lo que florece',
   pista: 'tocá',
   mensajeFinal: `Feliz día, mamá.
