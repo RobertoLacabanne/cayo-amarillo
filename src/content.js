@@ -16,7 +16,7 @@
 
 export default {
   destinataria: 'vos',
-  firma: 'Rober',
+  firma: '', // la pone cada uno con ?de=Nombre (el armador lo arma)
   titulo: 'Oficio de madre',
   pista: 'tocá',
   pistaDetalle: 'cada toque suma una flor y un verso',

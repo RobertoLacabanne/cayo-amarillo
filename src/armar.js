@@ -1,16 +1,12 @@
-// Armador de links: un link por mamá con ?para=Nombre (y ?de=Firma si no es
-// la de content.js), listo para copiar o mandar por WhatsApp.
+// Armador de links: un link por mamá con ?para=Nombre y ?de=Firma, listo
+// para copiar o mandar por WhatsApp.
 import '@fontsource/cormorant-garamond/latin-500-italic.css';
 import '@fontsource/caveat/latin-500.css';
 import './armar.css';
-import content from './content.js';
 
 const $ = (s) => document.querySelector(s);
 const input = $('#nombre');
 const deEl = $('#de');
-// Si llega desde el botón del final (?otra), es otra persona: la firma
-// arranca vacía para que ponga la suya.
-deEl.value = new URLSearchParams(location.search).has('otra') ? '' : content.firma || '';
 const linkEl = $('#link');
 const wa = $('#wa');
 const ver = $('#ver');
@@ -19,12 +15,11 @@ const base = location.origin + '/';
 
 const limpio = (v) => v.replace(/\s+/g, ' ').trim();
 
-// ?para= con su nombre; ?de= solo si la firma no es la de siempre
-// (vacío = sin firma).
+// ?para= con su nombre y ?de= con la firma (vacíos, no van).
 function linkPara(nombre, de = deEl.value) {
   const q = new URLSearchParams();
   if (limpio(nombre)) q.set('para', limpio(nombre));
-  if (limpio(de) !== (content.firma || '')) q.set('de', limpio(de));
+  if (limpio(de)) q.set('de', limpio(de));
   const qs = q.toString().replace(/\+/g, '%20');
   return qs ? `${base}?${qs}` : base;
 }

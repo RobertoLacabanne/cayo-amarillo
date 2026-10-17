@@ -36,7 +36,7 @@ const steps = (demoN
 const limpio = (v) => v.replace(/\s+/g, ' ').trim().slice(0, 28);
 const para = limpio(params.get('para') || '');
 const destinataria = para || content.destinataria;
-// ?de=Nombre cambia la firma; ?de= vacío la saca (sin parámetro, la de content.js)
+// ?de=Nombre firma el poema; sin parámetro, la de content.js (vacía = sin firma)
 const firma = params.has('de') ? limpio(params.get('de') || '') : content.firma || '';
 const seed = `${content.destinataria || 'ramo'}-${steps.map((s) => s.flor).join('|')}`;
 
@@ -355,9 +355,9 @@ soundEl.addEventListener('click', () => {
 });
 finalEl.querySelector('.again').addEventListener('click', restart);
 
-// Para mandárselo a otra mamá: el armador, así cada una pone su nombre y su firma.
+// Para mandárselo a otra mamá: el armador, así cada una pone su firma.
 finalEl.querySelector('.share').addEventListener('click', () => {
-  location.href = '/armar.html?otra';
+  location.href = '/armar.html';
 });
 document.addEventListener('gesturestart', (e) => e.preventDefault());
 let resizeT = 0;
