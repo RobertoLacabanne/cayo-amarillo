@@ -1,72 +1,131 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Lo que florece
 
-## Available Scripts
+Regalo para el Día de la Madre: una jarra de cerámica vacía, pintada en
+acuarela, que se llena con una flor por toque mientras aparece un poema verso
+a verso. Al último toque, una cinta lila se ata al cuello de la jarra, cuelga
+una tarjetita que dice «Para mamá», caen pétalos y queda el poema completo.
 
-In the project directory, you can run:
+Es la misma mecánica que el ramo de Jime (motor de acuarela propio), con otra
+identidad: papel apenas rosado, tinta ciruela, acento lila de jacarandá y
+un ramo de azaleas, claveles y hortensias.
 
-### `yarn start`
+## Editar el poema
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Todo lo editable está en **`src/content.js`**: destinataria, firma, título,
+texto de la pista, mensaje final y la lista de pasos `{ flor, verso }`.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- Flores de mamá: `azalea fucsia`, `azalea rosa`, `azalea blanca`,
+  `clavel rosa`, `clavel rojo`, `clavel blanco`, `hortensia` (celeste, lila y
+  rosa) y `hortensia rosa`. Verdes: `helecho`, `eucalipto`, `paniculata`.
+- También quedan las del ramo de Jime y sus variantes: `rosa rosada`,
+  `rosa blanca`, `rosa roja`, `rosa amarilla`, `gerbera`, `crisantemo`,
+  `fresia lila`, `fresia`, `alstroemeria rosa`, `alstroemeria`.
+- Funciona con **6 a 16 pasos**. La composición se recalcula sola para
+  cualquier orden y cantidad, y cada paso intermedio queda equilibrado.
+- Orden sugerido: verdes, flores grandes, medianas y al final paniculata.
+- Lo que va entre corchetes (por ejemplo la firma `[TU NOMBRE]`) se muestra
+  en frambuesa para que no se escape nada sin reemplazar.
 
-### `yarn test`
+## Mandarlo a cada mamá
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `armar.html` arma un link por mamá: su nombre (`?para=Nombre`) y de parte
+  de quién (`?de=Nombre`), listo para copiar o mandar por WhatsApp. La
+  tarjetita de la jarra dice «Para» y ese nombre (sin nombre, «Para vos»), y
+  el poema termina firmado con `de`. No hay firma por defecto: sin `de`, el
+  poema va sin firma.
+- Al final del regalo, «mandáselo a otra mamá» lleva al armador, para que
+  cada una lo mande con su firma.
+- `public/og.png` es la vista previa que muestra WhatsApp al pegar el link.
 
-### `yarn build`
+## Detalles del recorrido
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Bajo los versos, una fila de pétalos se pinta del color de cada flor; si
+  alguien se queda quieto a mitad del ramo, aparece «seguí tocando».
+- En el final llega un picaflor (`src/scene/picaflor.js`), se queda
+  suspendido junto a la flor más alta y se va. No aparece con `?calma` ni con
+  movimiento reducido.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Correrlo y publicarlo
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # genera dist/
+npm run preview    # prueba el build
+```
 
-### `yarn eject`
+**Netlify:** conectá el repo (o arrastrá la carpeta `dist/` a
+app.netlify.com/drop). `netlify.toml` ya define `npm run build` y `dist`.
+El sitio sale con `noindex` (meta y cabecera `X-Robots-Tag`).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Parámetros útiles para revisar sin tocar todo: `?n=5` (muestra 5 pasos ya
+abiertos), `?final` (va directo al final), `?calma` (versión con movimiento
+reducido). `lab.html` es el laboratorio de estudios de cada flor.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Arte propio (opcional)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Si ponés PNG con transparencia en `src/assets/petals/`, se usan en lugar del
+horneado procedural, sin tocar código:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- `rosa-rosada.png` reemplaza la cabeza entera (ancla en el centro; 1 px = 0,5
+  unidades de escena, o sea pintado a 2x).
+- `rosa-rosada-petalo.png` reemplaza cada pétalo de esa flor (ancla en el
+  centro del borde inferior; se escala al largo del pétalo horneado).
 
-## Learn More
+## Cómo está hecho
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Azaleas, claveles y hortensias** (`src/flowers/azalea.js`, `carnation.js`,
+  `hydrangea.js`): racimos de cinco pétalos con pecas y estambres largos;
+  copa de pétalos con el borde picado sobre un cáliz; bola de florcitas de
+  cuatro pétalos estampadas en capas. `lab.html?s=madres&zoom=2.6` las muestra
+  de cerca.
+- **La jarra** (`src/scene/jarra.js`) se pinta igual que las flores: esmalte crema, sombra lila del lado derecho, guarda lila con florcitas, pico, asa y sombra sobre la mesa.
+- **Pintar una vez, animar sprites.** Cada pétalo se hornea a bitmap con
+  Canvas 2D usando el pincel de Tyler Hobbs (polígono con deformación
+  gaussiana recursiva y 30–60 capas translúcidas intercaladas), con borde
+  oscurecido, granulación en el mismo grano de papel del fondo, luces que
+  son papel reservado y sombras de color. Después solo se anima transform y
+  opacidad.
+- **Horneado en un Web Worker** con OffscreenCanvas: la flor siguiente se
+  pinta mientras ella lee, sin trabar la animación. Si el navegador no lo
+  soporta, se hornea en el hilo principal en momentos quietos.
+- Cada flor terminada se **aplana** a un solo bitmap (horneado de antemano
+  en el worker) y se liberan sus pétalos.
+- **Dirty flag:** si nada se mueve, no se redibuja. El balanceo permanente es
+  de subpíxel y se dibuja a 20 fps; las floraciones, a 60.
+- Sin filtros SVG, sin blur ni sombras CSS animadas. Tipografías servidas
+  desde el propio sitio (Cormorant Garamond itálica y Caveat), sin llamadas
+  externas.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Memoria (estimación medida)
 
-### Code Splitting
+Bitmaps vivos con el ramo completo de 13 pasos en un teléfono de 390×844 a
+DPR 2 (tope de horneado 2x), incluyendo el envoltorio final: **≈ 28 MB**
+(medido con `stage.memoryMB()`), de los cuales ~5 MB son el canvas de la
+escena y ~5 MB el fondo. Durante una floración se suman los pétalos sueltos
+de esa flor (unos pocos MB) hasta que se aplana y se liberan.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Referencia: Safari en iOS tiene un tope de memoria total de canvas
+(reportado en 224 MB en iOS 12 y 384 MB en iOS 15; no encontré el valor
+oficial actual) y un área máxima por canvas de 16.777.216 px. Este proyecto
+queda muy por debajo: ningún canvas pasa de 1.000×1.800 px, los temporales
+se reducen a 1×1 al terminar y los del worker se transfieren como
+ImageBitmap y se cierran al liberarse.
 
-### Analyzing the Bundle Size
+## Rendimiento (medido)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Chromium headless **sin GPU** (raster por software, peor caso), 390×844 a
+DPR 2:
 
-### Making a Progressive Web App
+| Momento | Sin estrangular | CPU 4x |
+|---|---|---|
+| Floración de verdes y gerbera | 60 fps | 37–42 fps |
+| Floración de una rosa (≈30 pétalos a la vez) | 60 fps | ~26 fps |
+| Reposo (solo balanceo, dibujado a 20 fps) | 60 fps | ~48 fps |
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+El JavaScript de cada frame es < 1 ms (máx. ~6 ms); lo que falta hasta 60 con
+4x es el raster por software del navegador de prueba. Antes de mover el
+horneado al worker, los pasos 3–4 caían a 5–11 fps con 4x.
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# Cay--Amarillo
-# cayo-amarillo
-# cayo-amarillo
-# cayo-amarillo
+En un teléfono real Canvas 2D va por GPU y estos números son pesimistas;
+conviene probarlo en el iPhone de destino antes de mandarlo.
